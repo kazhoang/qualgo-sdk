@@ -91,6 +91,13 @@ export enum MoviePosterSizes {
   SIZE_ORIGINAL = 'original',
 }
 
+export enum ProfileSizes {
+  SIZE_W45 = 'w45',
+  SIZE_W185 = 'w185',
+  SIZE_H632 = 'h632',
+  SIZE_ORIGINAL = 'original',
+}
+
 export enum MovieError {
   CANT_FETCH_UPCOMING = 'Cannot fetch upcoming movies',
   CANT_FETCH_MOVIE_DETAIL = 'Cannot fetch movie details',
