@@ -24,6 +24,36 @@ export type ProductionCompany = {
   origin_country?: string;
 };
 
+export type Review = {
+  author: string;
+  author_details: {
+    name: string;
+    username: string;
+    avatar_path: string;
+    rating: number;
+  };
+  content: string;
+  created_at: string;
+  id: string;
+  updated_at: string;
+  url: string;
+};
+
+export type Caster = {
+  adult: string;
+  gender: number;
+  known_for_department: string;
+  name: string;
+  id: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+};
+
 export type MovieDetail = Movie & {
   belongs_to_collection: {
     backdrop_path?: string;
@@ -64,6 +94,7 @@ export enum MoviePosterSizes {
 export enum MovieError {
   CANT_FETCH_UPCOMING = 'Cannot fetch upcoming movies',
   CANT_FETCH_MOVIE_DETAIL = 'Cannot fetch movie details',
+  CANT_FETCH_MOVIE_REVIEWS = 'Cannot fetch movie reviews',
   MOVIE_IMAGE_URL_EMPTY = 'Movie image URL is empty',
   CANT_FETCH_SEARCH_RESULTS = 'Cannot fetch search results',
 }

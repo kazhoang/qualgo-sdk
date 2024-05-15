@@ -1,6 +1,13 @@
 import axios, { AxiosInstance } from 'axios';
 import CONFIG from '../config';
-import { Movie, MovieCategory, MovieDetail, MovieError } from '../types';
+import {
+  Caster,
+  Movie,
+  MovieCategory,
+  MovieDetail,
+  MovieError,
+  Review,
+} from '../types';
 
 class QualgoClient {
   private static instance: QualgoClient;
@@ -48,6 +55,21 @@ class QualgoClient {
   }
 
   /**
+   * Fetches a list of new release movies.
+   *
+   * @returns {Promise<Movie[]>} A promise that resolves to an array of movies.
+   * @throws {Error} Throws an error if the API call fails.
+   */
+  async getNewReleases(): Promise<Movie[]> {
+    try {
+      const response = await this.client.get(`/discover/movie`);
+      return response.data.results as Movie[];
+    } catch (error) {
+      throw new Error(MovieError.CANT_FETCH_UPCOMING);
+    }
+  }
+
+  /**
    * Fetches a list of movies based on the specified category.
    *
    * @param {MovieCategory} category - The category of movies to fetch (e.g., 'upcoming', 'popular').
@@ -76,6 +98,38 @@ class QualgoClient {
       return response.data as MovieDetail;
     } catch (error) {
       throw new Error(MovieError.CANT_FETCH_MOVIE_DETAIL);
+    }
+  }
+
+  /**
+   * Fetches views of a specific movie by its ID.
+   *
+   * @param {number|string} movieId - The identifier for the movie, either a number or a string.
+   * @returns {Promise<Review>} A promise that resolves to an array of reviews.
+   * @throws {Error} Throws an error if the movie details cannot be fetched from the API.
+   */
+  async fetchMovieReviews(movieId: number | string): Promise<Review[]> {
+    try {
+      const response = await this.client.get(`/movie/${movieId}/reviews`);
+      return response.data.results as Review[];
+    } catch (error) {
+      throw new Error(MovieError.CANT_FETCH_MOVIE_REVIEWS);
+    }
+  }
+
+  /**
+   * Fetches casters of a specific movie by its ID.
+   *
+   * @param {number|string} movieId - The identifier for the movie, either a number or a string.
+   * @returns {Promise<Review>} A promise that resolves to an array of casters.
+   * @throws {Error} Throws an error if the movie details cannot be fetched from the API.
+   */
+  async fetchMovieCasters(movieId: number | string): Promise<Caster[]> {
+    try {
+      const response = await this.client.get(`/movie/${movieId}/credits`);
+      return response.data.cast as Caster[];
+    } catch (error) {
+      throw new Error(MovieError.CANT_FETCH_MOVIE_REVIEWS);
     }
   }
 
